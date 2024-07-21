@@ -1,10 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://cnq3v2vsvdnv2"]
+[gd_scene load_steps=10 format=3 uid="uid://cnq3v2vsvdnv2"]
 
 [ext_resource type="Script" path="res://scenes/boss/boss.gd" id="1_4jyna"]
 [ext_resource type="Texture2D" uid="uid://i00lsslrw4ux" path="res://assets/sprites/tile_0340.png" id="1_fka85"]
 [ext_resource type="Texture2D" uid="uid://d4mgy681ppfbi" path="res://assets/sprites/tile_0341.png" id="2_i6hon"]
 [ext_resource type="Texture2D" uid="uid://ch7jq02bubocs" path="res://assets/sprites/tile_0342.png" id="3_h46g1"]
 [ext_resource type="Texture2D" uid="uid://dls15rcyk8eki" path="res://assets/sprites/tile_0343.png" id="4_3arkw"]
+[ext_resource type="PackedScene" uid="uid://djevvnfyinpd0" path="res://scenes/effect_creator/effect_creator.tscn" id="6_eemb2"]
 
 [sub_resource type="Curve" id="Curve_mvabj"]
 _data = [Vector2(0, 0.879588), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
@@ -34,6 +35,7 @@ animations = [{
 size = Vector2(10, 10)
 
 [node name="Boss" type="Area2D"]
+z_index = 2
 scale = Vector2(3, 3)
 script = ExtResource("1_4jyna")
 
@@ -58,3 +60,11 @@ frame_progress = 0.714434
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_jsr26")
+
+[node name="EffectCreator" parent="." instance=ExtResource("6_eemb2")]
+effect_scale = 5.0
+
+[node name="FlashTimer" type="Timer" parent="."]
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="timeout" from="FlashTimer" to="." method="_on_flash_timer_timeout"]
