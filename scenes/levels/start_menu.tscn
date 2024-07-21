@@ -1,0 +1,49 @@
+[gd_scene load_steps=6 format=3 uid="uid://5jbcamtfrnus"]
+
+[ext_resource type="FontFile" uid="uid://d0ov7mslwdkdl" path="res://assets/fonts/pixel_rpg.ttf" id="1_71weo"]
+[ext_resource type="LabelSettings" uid="uid://blf4g16s1teqg" path="res://assets/settings/label_settings.tres" id="1_a6ppm"]
+[ext_resource type="Script" path="res://scenes/levels/start_menu.gd" id="1_bsssa"]
+[ext_resource type="PackedScene" uid="uid://cn7d1w6cn4jxu" path="res://scenes/effects/star_particles.tscn" id="3_ls77o"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_3mgmw"]
+font = ExtResource("1_71weo")
+font_size = 24
+outline_size = 5
+outline_color = Color(0, 0, 0, 1)
+
+[node name="StartMenu" type="ColorRect"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+script = ExtResource("1_bsssa")
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "1-BIT SHOOTER"
+label_settings = SubResource("LabelSettings_3mgmw")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Subtitle" type="Label" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "Press Space to Start
+Press Escape to Quit"
+label_settings = ExtResource("1_a6ppm")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="StarParticles" parent="." instance=ExtResource("3_ls77o")]

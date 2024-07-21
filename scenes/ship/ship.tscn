@@ -1,0 +1,91 @@
+[gd_scene load_steps=6 format=3 uid="uid://over4df26bpc"]
+
+[ext_resource type="Script" path="res://scenes/ship/ship.gd" id="1_h2dnc"]
+[ext_resource type="Texture2D" uid="uid://ccjnafqu3c1g1" path="res://assets/sprites/ship.png" id="1_u7shg"]
+[ext_resource type="PackedScene" uid="uid://d27v277ea33y4" path="res://scenes/laser/laser.tscn" id="2_4s0nl"]
+[ext_resource type="PackedScene" uid="uid://djevvnfyinpd0" path="res://scenes/effect_creator/effect_creator.tscn" id="4_4l0qx"]
+
+[sub_resource type="Curve" id="Curve_oamch"]
+_data = [Vector2(0, 0.879588), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[node name="Ship" type="Area2D"]
+z_index = 1
+script = ExtResource("1_h2dnc")
+laser_scene = ExtResource("2_4s0nl")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_u7shg")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(-5, -5, -8, -5, -8, 5, -5, 5, -5, 7, -2, 7, 7, 0, -2, -7, -5, -7)
+
+[node name="EffectCreator" parent="." instance=ExtResource("4_4l0qx")]
+
+[node name="LeftWingThrust" type="CPUParticles2D" parent="."]
+position = Vector2(-3, -7)
+rotation = 1.309
+emitting = false
+amount = 15
+lifetime = 0.5
+lifetime_randomness = 0.12
+direction = Vector2(-1, 2.08165e-12)
+spread = 15.0
+gravity = Vector2(2.08165e-12, 2.08165e-12)
+initial_velocity_min = 25.0
+initial_velocity_max = 100.0
+scale_amount_curve = SubResource("Curve_oamch")
+
+[node name="RightWingThrust" type="CPUParticles2D" parent="."]
+position = Vector2(-3, 7)
+rotation = -1.309
+emitting = false
+amount = 15
+lifetime = 0.5
+lifetime_randomness = 0.12
+direction = Vector2(-1, 2.08165e-12)
+spread = 15.0
+gravity = Vector2(2.08165e-12, 2.08165e-12)
+initial_velocity_min = 25.0
+initial_velocity_max = 100.0
+scale_amount_curve = SubResource("Curve_oamch")
+
+[node name="Thrusters" type="Node2D" parent="."]
+
+[node name="Top" type="CPUParticles2D" parent="Thrusters"]
+position = Vector2(-7, -3)
+amount = 15
+lifetime = 0.5
+lifetime_randomness = 0.12
+direction = Vector2(-1, 2.08165e-12)
+spread = 15.0
+gravity = Vector2(2.08165e-12, 2.08165e-12)
+initial_velocity_min = 25.0
+initial_velocity_max = 100.0
+scale_amount_curve = SubResource("Curve_oamch")
+
+[node name="Mid" type="CPUParticles2D" parent="Thrusters"]
+position = Vector2(-7, 0)
+amount = 15
+lifetime = 0.5
+lifetime_randomness = 0.12
+direction = Vector2(-1, 2.08165e-12)
+spread = 15.0
+gravity = Vector2(2.08165e-12, 2.08165e-12)
+initial_velocity_min = 25.0
+initial_velocity_max = 100.0
+scale_amount_curve = SubResource("Curve_oamch")
+
+[node name="Low" type="CPUParticles2D" parent="Thrusters"]
+position = Vector2(-7, 3)
+amount = 15
+lifetime = 0.5
+lifetime_randomness = 0.12
+direction = Vector2(-1, 2.08165e-12)
+spread = 15.0
+gravity = Vector2(2.08165e-12, 2.08165e-12)
+initial_velocity_min = 25.0
+initial_velocity_max = 100.0
+scale_amount_curve = SubResource("Curve_oamch")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]

@@ -1,0 +1,38 @@
+[gd_scene load_steps=5 format=3 uid="uid://c1vyyeeodm0em"]
+
+[ext_resource type="Script" path="res://scenes/enemy/enemy.gd" id="1_6yvcs"]
+[ext_resource type="Texture2D" uid="uid://ctfxdkod2bx6d" path="res://assets/sprites/enemy.png" id="2_46ol4"]
+[ext_resource type="PackedScene" uid="uid://djevvnfyinpd0" path="res://scenes/effect_creator/effect_creator.tscn" id="3_6b5ax"]
+
+[sub_resource type="Curve" id="Curve_wgrrd"]
+_data = [Vector2(0, 0.879588), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[node name="Enemy" type="Area2D"]
+script = ExtResource("1_6yvcs")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_46ol4")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(-5, -2, 1, -7, 3, -7, 5, -5, 5, 5, 3, 7, 1, 7, -5, 2)
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+scale = Vector2(0.5, 0.6)
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+position = Vector2(5, 0)
+amount = 15
+lifetime = 0.5
+lifetime_randomness = 0.65
+direction = Vector2(1, 2.08165e-12)
+spread = 15.0
+gravity = Vector2(2.08165e-12, 2.08165e-12)
+initial_velocity_min = 25.0
+initial_velocity_max = 100.0
+scale_amount_curve = SubResource("Curve_wgrrd")
+
+[node name="EffectCreator" parent="." instance=ExtResource("3_6b5ax")]
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

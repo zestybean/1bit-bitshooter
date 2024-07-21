@@ -1,0 +1,8 @@
+[gd_resource type="LabelSettings" load_steps=2 format=3 uid="uid://blf4g16s1teqg"]
+
+[ext_resource type="FontFile" uid="uid://d0ov7mslwdkdl" path="res://assets/fonts/pixel_rpg.ttf" id="1_nm1x4"]
+
+[resource]
+font = ExtResource("1_nm1x4")
+font_size = 6
+shadow_size = 0

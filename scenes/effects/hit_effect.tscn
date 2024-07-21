@@ -1,0 +1,28 @@
+[gd_scene load_steps=4 format=3 uid="uid://1t3omp7msflm"]
+
+[ext_resource type="Script" path="res://scenes/effects/hit_effect.gd" id="1_mmquu"]
+[ext_resource type="AudioStream" uid="uid://bs2nywcft7w8e" path="res://assets/sounds/hit_sound.wav" id="2_0rfb1"]
+
+[sub_resource type="Gradient" id="Gradient_hebjf"]
+offsets = PackedFloat32Array(0, 0.764706, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0.708061, 1, 1, 1, 0)
+
+[node name="HitEffect" type="Node2D"]
+script = ExtResource("1_mmquu")
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+amount = 6
+lifetime = 0.5
+explosiveness = 1.0
+spread = 180.0
+gravity = Vector2(2.08165e-12, 2.08165e-12)
+initial_velocity_max = 50.0
+scale_amount_max = 1.5
+color_ramp = SubResource("Gradient_hebjf")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_0rfb1")
+autoplay = true
+bus = &"SFX"
+
+[connection signal="finished" from="CPUParticles2D" to="." method="_on_cpu_particles_2d_finished"]

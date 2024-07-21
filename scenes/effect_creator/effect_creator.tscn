@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://djevvnfyinpd0"]
+
+[ext_resource type="Script" path="res://scenes/effect_creator/effect_creator.gd" id="1_uq133"]
+[ext_resource type="PackedScene" uid="uid://bfovochchdxd6" path="res://scenes/effects/explosion_effect.tscn" id="2_e6dsa"]
+
+[node name="EffectCreator" type="Node2D"]
+script = ExtResource("1_uq133")
+effect_scene = ExtResource("2_e6dsa")
