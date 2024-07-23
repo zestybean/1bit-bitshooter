@@ -7,6 +7,7 @@ extends Area2D
 @export var wave_amplitude: float = 50
 @export var wave_frequency: float = 1
 @export var can_fire: bool = false
+@onready var shoot_sound: AudioStreamPlayer = $ShootSound
 
 @onready var flash_timer: Timer= $FlashTimer
 @onready var fire_timer: Timer= $FireTimer
@@ -57,6 +58,7 @@ func _on_flash_timer_timeout()->void:
 
 func _on_fire_timer_timeout()->void:
 	if can_fire:
+		shoot_sound.play()
 		var world := get_tree().current_scene
 		var laser := enemy_laser_scene.instantiate()
 
