@@ -36,9 +36,9 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jsr26"]
 size = Vector2(10, 10)
 
-[node name="Boss" type="Area2D"]
+[node name="Boss" type="Area2D" groups=["boss"]]
 z_index = 2
-scale = Vector2(3, 3)
+scale = Vector2(4, 4)
 script = ExtResource("1_4jyna")
 enemy_laser_scene = ExtResource("2_1vumx")
 

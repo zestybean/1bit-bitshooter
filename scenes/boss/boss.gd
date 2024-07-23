@@ -3,7 +3,7 @@ extends Area2D
 @export var enemy_laser_scene: PackedScene
 
 @export var speed: float = 20
-@export var armor: int = 50
+@export var armor: int = 10
 @export var wave_amplitude: float = 50
 @export var wave_frequency: float = 1
 @export var can_fire: bool = false
@@ -13,6 +13,9 @@ extends Area2D
 @onready var fire_timer: Timer= $FireTimer
 
 var time_passed: float = 0
+var boss_is_moving_to_position: bool
+
+signal boss_destroyed
 
 # Declare a variable to hold the original modulate color
 var original_modulate: Color
@@ -43,6 +46,7 @@ func _on_body_entered(body: Node2D)->void:
 	if armor <= 0:
 		var world := get_tree().current_scene
 		world.score += 50
+		boss_destroyed.emit()
 		queue_free()
 		
 func flash() -> void:
