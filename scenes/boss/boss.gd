@@ -1,10 +1,15 @@
 extends Area2D
 
+@export var enemy_laser_scene: PackedScene
+
 @export var speed: float = 20
 @export var armor: int = 50
 @export var wave_amplitude: float = 50
 @export var wave_frequency: float = 1
+@export var can_fire: bool = false
+
 @onready var flash_timer: Timer= $FlashTimer
+@onready var fire_timer: Timer= $FireTimer
 
 var time_passed: float = 0
 
@@ -21,6 +26,7 @@ func _process(delta: float) -> void:
 
 	# Horizontal movement
 	if position.x < 280:
+		can_fire = true
 		speed = 0.0
 		# Vertical wave movement
 		position.y = 90 + wave_amplitude * sin(time_passed * wave_frequency)
@@ -47,3 +53,13 @@ func flash() -> void:
 
 func _on_flash_timer_timeout()->void:
 	modulate = original_modulate
+
+
+func _on_fire_timer_timeout()->void:
+	if can_fire:
+		var world := get_tree().current_scene
+		var laser := enemy_laser_scene.instantiate()
+
+		world.add_child(laser)
+		laser.position = position # Replace with function body.
+		fire_timer.start(0.4)

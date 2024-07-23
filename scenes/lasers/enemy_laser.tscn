@@ -1,0 +1,26 @@
+[gd_scene load_steps=6 format=3 uid="uid://bqorvsd42mo82"]
+
+[ext_resource type="Script" path="res://scenes/lasers/enemy_laser.gd" id="1_1rikh"]
+[ext_resource type="Texture2D" uid="uid://v46oc7ypq3mu" path="res://assets/sprites/enemy_laser.png" id="1_qt8qm"]
+[ext_resource type="PackedScene" uid="uid://djevvnfyinpd0" path="res://scenes/effect_creator/effect_creator.tscn" id="3_g7lpd"]
+[ext_resource type="AudioStream" uid="uid://da6hqfyr3fehu" path="res://assets/sounds/enemy_laser_sound.wav" id="4_nk8rp"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_vm48c"]
+radius = 7.0
+
+[node name="EnemyLaser" type="Area2D"]
+script = ExtResource("1_1rikh")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_qt8qm")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_vm48c")
+
+[node name="EffectCreator" parent="." instance=ExtResource("3_g7lpd")]
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_nk8rp")
+volume_db = -10.0
+autoplay = true
+bus = &"SFX"

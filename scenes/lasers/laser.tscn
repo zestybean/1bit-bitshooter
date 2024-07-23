@@ -1,9 +1,9 @@
 [gd_scene load_steps=6 format=3 uid="uid://d27v277ea33y4"]
 
-[ext_resource type="Texture2D" uid="uid://dyiuj3gacbd24" path="res://assets/sprites/laser.png" id="1_7keye"]
-[ext_resource type="PackedScene" uid="uid://djevvnfyinpd0" path="res://scenes/effect_creator/effect_creator.tscn" id="2_7dkxw"]
-[ext_resource type="PackedScene" uid="uid://1t3omp7msflm" path="res://scenes/effects/hit_effect.tscn" id="3_w32jk"]
-[ext_resource type="AudioStream" uid="uid://daoesgaoviuc8" path="res://assets/sounds/laser_sound.wav" id="4_a8eb3"]
+[ext_resource type="Texture2D" uid="uid://dyiuj3gacbd24" path="res://assets/sprites/laser.png" id="1_a16vm"]
+[ext_resource type="PackedScene" uid="uid://djevvnfyinpd0" path="res://scenes/effect_creator/effect_creator.tscn" id="2_v237y"]
+[ext_resource type="PackedScene" uid="uid://1t3omp7msflm" path="res://scenes/effects/hit_effect.tscn" id="3_3wj75"]
+[ext_resource type="AudioStream" uid="uid://daoesgaoviuc8" path="res://assets/sounds/laser_sound.wav" id="4_vmdqc"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vcnl0"]
 size = Vector2(7, 6)
@@ -13,7 +13,7 @@ gravity_scale = 1.66533e-16
 linear_velocity = Vector2(200, 2.08165e-12)
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("1_7keye")
+texture = ExtResource("1_a16vm")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0.5, 0)
@@ -23,11 +23,11 @@ shape = SubResource("RectangleShape2D_vcnl0")
 position = Vector2(0.5, 0)
 scale = Vector2(0.35, 0.3)
 
-[node name="EffectCreator" parent="." instance=ExtResource("2_7dkxw")]
-effect_scene = ExtResource("3_w32jk")
+[node name="EffectCreator" parent="." instance=ExtResource("2_v237y")]
+effect_scene = ExtResource("3_3wj75")
 
 [node name="ShootSound" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("4_a8eb3")
+stream = ExtResource("4_vmdqc")
 autoplay = true
 bus = &"SFX"
 

@@ -1,7 +1,8 @@
-[gd_scene load_steps=10 format=3 uid="uid://cnq3v2vsvdnv2"]
+[gd_scene load_steps=11 format=3 uid="uid://cnq3v2vsvdnv2"]
 
 [ext_resource type="Script" path="res://scenes/boss/boss.gd" id="1_4jyna"]
 [ext_resource type="Texture2D" uid="uid://i00lsslrw4ux" path="res://assets/sprites/tile_0340.png" id="1_fka85"]
+[ext_resource type="PackedScene" uid="uid://bqorvsd42mo82" path="res://scenes/lasers/enemy_laser.tscn" id="2_1vumx"]
 [ext_resource type="Texture2D" uid="uid://d4mgy681ppfbi" path="res://assets/sprites/tile_0341.png" id="2_i6hon"]
 [ext_resource type="Texture2D" uid="uid://ch7jq02bubocs" path="res://assets/sprites/tile_0342.png" id="3_h46g1"]
 [ext_resource type="Texture2D" uid="uid://dls15rcyk8eki" path="res://assets/sprites/tile_0343.png" id="4_3arkw"]
@@ -38,6 +39,7 @@ size = Vector2(10, 10)
 z_index = 2
 scale = Vector2(3, 3)
 script = ExtResource("1_4jyna")
+enemy_laser_scene = ExtResource("2_1vumx")
 
 [node name="CPUParticles2D" type="CPUParticles2D" parent="."]
 position = Vector2(-1, 0)
@@ -66,5 +68,9 @@ effect_scale = 5.0
 
 [node name="FlashTimer" type="Timer" parent="."]
 
+[node name="FireTimer" type="Timer" parent="."]
+autostart = true
+
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="timeout" from="FlashTimer" to="." method="_on_flash_timer_timeout"]
+[connection signal="timeout" from="FireTimer" to="." method="_on_fire_timer_timeout"]
