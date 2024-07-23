@@ -1,9 +1,41 @@
-[gd_scene load_steps=6 format=3 uid="uid://over4df26bpc"]
+[gd_scene load_steps=9 format=3 uid="uid://over4df26bpc"]
 
 [ext_resource type="Script" path="res://scenes/ship/ship.gd" id="1_h2dnc"]
 [ext_resource type="Texture2D" uid="uid://ccjnafqu3c1g1" path="res://assets/sprites/ship.png" id="1_u7shg"]
 [ext_resource type="PackedScene" uid="uid://d27v277ea33y4" path="res://scenes/lasers/laser.tscn" id="2_aiqqi"]
 [ext_resource type="PackedScene" uid="uid://djevvnfyinpd0" path="res://scenes/effect_creator/effect_creator.tscn" id="4_4l0qx"]
+[ext_resource type="AudioStream" uid="uid://daoesgaoviuc8" path="res://assets/sounds/laser_sound.wav" id="5_1mfu1"]
+
+[sub_resource type="Shader" id="Shader_60rmn"]
+code = "shader_type canvas_item;
+
+uniform vec4 glow_color : source_color;               // Color of the glow
+uniform float glow_strength : hint_range(0.0, 1.0);  // Strength of the glow
+uniform float glow_radius : hint_range(0.0, 10.0);   // Radius of the glow
+
+void fragment() {
+    vec4 tex_color = texture(TEXTURE, UV);          // Get the texture color at the current pixel
+    vec4 glow = vec4(0.0);                          // Initialize the glow color to zero
+    
+    // Loop over a grid of neighboring pixels
+    for (float x = -glow_radius; x <= glow_radius; x++) {
+        for (float y = -glow_radius; y <= glow_radius; y++) {
+            vec2 offset = vec2(x, y) * 0.005;       // Offset for neighboring pixels
+            glow += texture(TEXTURE, UV + offset) * glow_color * glow_strength; // Accumulate glow
+        }
+    }
+    
+    // Normalize the accumulated glow by the area of the sampling grid
+    COLOR = tex_color + glow / (glow_radius * glow_radius * 4.0);
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vptfq"]
+resource_local_to_scene = true
+shader = SubResource("Shader_60rmn")
+shader_parameter/glow_color = Color(0.698039, 0.427451, 0.662745, 1)
+shader_parameter/glow_strength = 0.519
+shader_parameter/glow_radius = 0.64
 
 [sub_resource type="Curve" id="Curve_oamch"]
 _data = [Vector2(0, 0.879588), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
@@ -11,6 +43,7 @@ point_count = 2
 
 [node name="Ship" type="Area2D"]
 z_index = 1
+material = SubResource("ShaderMaterial_vptfq")
 script = ExtResource("1_h2dnc")
 laser_scene = ExtResource("2_aiqqi")
 
@@ -91,6 +124,11 @@ scale_amount_curve = SubResource("Curve_oamch")
 [node name="FireRateTimer" type="Timer" parent="."]
 wait_time = 0.25
 autostart = true
+
+[node name="ShootSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_1mfu1")
+autoplay = true
+bus = &"SFX"
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="timeout" from="FireRateTimer" to="." method="_on_fire_rate_timer_timeout"]
