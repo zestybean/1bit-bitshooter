@@ -4,7 +4,17 @@ extends Node2D
 @onready var spawn_rate_timer:Timer = $SpawnRateTimer
 @onready var spawn_points:Node2D = $SpawnPoints
 
+@onready var spawn_timer_down := false
+@onready var boss_spawned:= false
+
 signal boss_move_in
+
+func _process(delta:float)->void:
+	var enemies := get_tree().get_nodes_in_group("enemy")
+	
+	if enemies.size() == 0 and spawn_timer_down and not boss_spawned:
+		boss_spawned = true
+		boss_move_in.emit()
 
 func get_spawn_position()->int:
 	var points:Array = spawn_points.get_children()
@@ -23,5 +33,5 @@ func _on_timer_timeout()->void:
 	spawn_enemy() # Replace with function body.
 
 func _on_enemy_limit_and_boss_spawn_timer_timeout()->void:
-	boss_move_in.emit()
+	spawn_timer_down = true
 	spawn_rate_timer.stop()

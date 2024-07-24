@@ -71,7 +71,7 @@ position = Vector2(320, 0)
 [node name="StarParticles" parent="." instance=ExtResource("5_bhpu5")]
 
 [node name="Boss" parent="." instance=ExtResource("6_w8ky2")]
-position = Vector2(400, 90)
+position = Vector2(500, 90)
 
 [connection signal="ship_destroyed" from="Ship" to="." method="_on_ship_ship_destroyed"]
 [connection signal="boss_move_in" from="EnemySpawner" to="Boss" method="_on_enemy_spawner_boss_move_in"]

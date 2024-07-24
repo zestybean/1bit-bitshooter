@@ -3,7 +3,7 @@ extends Area2D
 @export var enemy_laser_scene: PackedScene
 
 @export var speed: float = 20
-@export var armor: int = 10
+@export var armor: int = 50
 @export var wave_amplitude: float = 50
 @export var wave_frequency: float = 1
 @export var can_fire: bool = false
