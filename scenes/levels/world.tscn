@@ -1,10 +1,11 @@
-[gd_scene load_steps=8 format=3 uid="uid://dml036bhudf3d"]
+[gd_scene load_steps=9 format=3 uid="uid://dml036bhudf3d"]
 
 [ext_resource type="PackedScene" uid="uid://over4df26bpc" path="res://scenes/ship/ship.tscn" id="1_g1wfg"]
 [ext_resource type="Script" path="res://scenes/levels/world.gd" id="1_pdkvu"]
 [ext_resource type="PackedScene" uid="uid://vnc2knqqd55d" path="res://scenes/enemy_spawner/enemy_spawner.tscn" id="2_htdnm"]
 [ext_resource type="LabelSettings" uid="uid://blf4g16s1teqg" path="res://assets/settings/label_settings.tres" id="2_kt0o8"]
 [ext_resource type="PackedScene" uid="uid://cn7d1w6cn4jxu" path="res://scenes/effects/star_particles.tscn" id="5_bhpu5"]
+[ext_resource type="PackedScene" uid="uid://cnq3v2vsvdnv2" path="res://scenes/boss/boss.tscn" id="6_w8ky2"]
 
 [sub_resource type="Shader" id="Shader_60rmn"]
 code = "shader_type canvas_item;
@@ -69,4 +70,10 @@ position = Vector2(320, 0)
 
 [node name="StarParticles" parent="." instance=ExtResource("5_bhpu5")]
 
+[node name="Boss" parent="." instance=ExtResource("6_w8ky2")]
+position = Vector2(400, 90)
+
 [connection signal="ship_destroyed" from="Ship" to="." method="_on_ship_ship_destroyed"]
+[connection signal="boss_move_in" from="EnemySpawner" to="Boss" method="_on_enemy_spawner_boss_move_in"]
+[connection signal="boss_destroyed" from="Boss" to="." method="_on_boss_boss_destroyed"]
+[connection signal="boss_moving" from="Boss" to="Ship" method="_on_boss_boss_moving"]

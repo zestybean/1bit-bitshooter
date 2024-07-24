@@ -121,7 +121,7 @@ initial_velocity_min = 25.0
 initial_velocity_max = 100.0
 scale_amount_curve = SubResource("Curve_oamch")
 
-[node name="FireRateTimer" type="Timer" parent="."]
+[node name="FireRateTimer" type="Timer" parent="." groups=["player"]]
 wait_time = 0.25
 autostart = true
 

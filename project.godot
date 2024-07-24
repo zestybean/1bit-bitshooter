@@ -50,7 +50,7 @@ enabled=PackedStringArray()
 
 folder_colors={
 "res://assets/": "orange",
-"res://scenes/": "green"
+"res://scenes/": "purple"
 }
 
 [input]

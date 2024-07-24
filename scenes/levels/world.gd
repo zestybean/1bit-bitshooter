@@ -22,8 +22,8 @@ func _on_ship_ship_destroyed()->void:
 	else:
 		SaveAndLoad.save_highscore(score)
 	get_tree().change_scene_to_file("res://scenes/levels/game_over_screen.tscn")
-	
-func _on_boss_destroyed()->void:
+
+func _on_boss_boss_destroyed()->void:
 	await get_tree().create_timer(3.0).timeout
 	var highscore := SaveAndLoad.load_highscore()
 	if highscore != null:
@@ -32,3 +32,4 @@ func _on_boss_destroyed()->void:
 	else:
 		SaveAndLoad.save_highscore(score)
 	get_tree().change_scene_to_file("res://scenes/levels/game_over_screen.tscn")
+

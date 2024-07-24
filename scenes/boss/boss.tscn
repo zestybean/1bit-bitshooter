@@ -64,7 +64,7 @@ frame_progress = 0.714434
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_jsr26")
 
-[node name="EffectCreator" parent="." instance=ExtResource("6_eemb2")]
+[node name="EffectCreator" parent="." groups=["boss"] instance=ExtResource("6_eemb2")]
 effect_scale = 5.0
 
 [node name="FlashTimer" type="Timer" parent="."]

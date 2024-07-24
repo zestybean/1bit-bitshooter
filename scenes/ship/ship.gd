@@ -12,6 +12,8 @@ var height: Variant = ProjectSettings.get_setting("display/window/size/viewport_
 @onready var left_wing_thrust := $LeftWingThrust
 @onready var right_wing_thrust := $RightWingThrust
 
+var boss_arriving:bool = false
+
 signal ship_destroyed
 
 func _process(delta: float) -> void:
@@ -37,7 +39,7 @@ func _process(delta: float) -> void:
 		left_wing_thrust.emitting = false
 		right_wing_thrust.emitting = false
 
-	if Input.is_action_pressed("fire"):
+	if Input.is_action_pressed("fire") and not boss_arriving:
 		if fire_rate_timer.is_stopped():
 			fire_rate_timer.start()
 	else:
@@ -59,3 +61,7 @@ func fire_laser() -> void:
 
 func _on_fire_rate_timer_timeout() -> void:
 	fire_laser()
+
+
+func _on_boss_boss_moving(boss_moving:bool)->void:
+	boss_arriving = boss_moving
