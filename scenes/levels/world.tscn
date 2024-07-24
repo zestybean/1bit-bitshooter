@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://dml036bhudf3d"]
+[gd_scene load_steps=9 format=3 uid="uid://dml036bhudf3d"]
 
 [ext_resource type="PackedScene" uid="uid://over4df26bpc" path="res://scenes/ship/ship.tscn" id="1_g1wfg"]
 [ext_resource type="Script" path="res://scenes/levels/world.gd" id="1_pdkvu"]
@@ -6,6 +6,37 @@
 [ext_resource type="LabelSettings" uid="uid://blf4g16s1teqg" path="res://assets/settings/label_settings.tres" id="2_kt0o8"]
 [ext_resource type="PackedScene" uid="uid://cn7d1w6cn4jxu" path="res://scenes/effects/star_particles.tscn" id="5_bhpu5"]
 [ext_resource type="PackedScene" uid="uid://cnq3v2vsvdnv2" path="res://scenes/boss/boss.tscn" id="6_w8ky2"]
+
+[sub_resource type="Shader" id="Shader_60rmn"]
+code = "shader_type canvas_item;
+
+uniform vec4 glow_color : source_color;               // Color of the glow
+uniform float glow_strength : hint_range(0.0, 1.0);  // Strength of the glow
+uniform float glow_radius : hint_range(0.0, 10.0);   // Radius of the glow
+
+void fragment() {
+    vec4 tex_color = texture(TEXTURE, UV);          // Get the texture color at the current pixel
+    vec4 glow = vec4(0.0);                          // Initialize the glow color to zero
+    
+    // Loop over a grid of neighboring pixels
+    for (float x = -glow_radius; x <= glow_radius; x++) {
+        for (float y = -glow_radius; y <= glow_radius; y++) {
+            vec2 offset = vec2(x, y) * 0.005;       // Offset for neighboring pixels
+            glow += texture(TEXTURE, UV + offset) * glow_color * glow_strength; // Accumulate glow
+        }
+    }
+    
+    // Normalize the accumulated glow by the area of the sampling grid
+    COLOR = tex_color + glow / (glow_radius * glow_radius * 4.0);
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1rucs"]
+resource_local_to_scene = true
+shader = SubResource("Shader_60rmn")
+shader_parameter/glow_color = Color(0.698039, 0.427451, 0.662745, 1)
+shader_parameter/glow_strength = 0.519
+shader_parameter/glow_radius = 0.64
 
 [node name="World" type="Node2D"]
 script = ExtResource("1_pdkvu")
@@ -31,6 +62,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Ship" parent="." instance=ExtResource("1_g1wfg")]
+material = SubResource("ShaderMaterial_1rucs")
 position = Vector2(24, 96)
 
 [node name="EnemySpawner" parent="." instance=ExtResource("2_htdnm")]
@@ -40,6 +72,8 @@ position = Vector2(320, 0)
 
 [node name="Boss" parent="." instance=ExtResource("6_w8ky2")]
 position = Vector2(400, 90)
-scale = Vector2(5, 5)
 
 [connection signal="ship_destroyed" from="Ship" to="." method="_on_ship_ship_destroyed"]
+[connection signal="boss_move_in" from="EnemySpawner" to="Boss" method="_on_enemy_spawner_boss_move_in"]
+[connection signal="boss_destroyed" from="Boss" to="." method="_on_boss_boss_destroyed"]
+[connection signal="boss_moving" from="Boss" to="Ship" method="_on_boss_boss_moving"]
