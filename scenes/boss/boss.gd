@@ -8,7 +8,7 @@ extends Area2D
 @export var wave_frequency: float = 1
 @export var can_fire: bool = false
 @onready var shoot_sound: AudioStreamPlayer = $ShootSound
-@onready var star_particles = $"../StarParticles"
+@onready var star_particles := $"../StarParticles"
 
 @onready var flash_timer: Timer= $FlashTimer
 @onready var fire_timer: Timer= $FireTimer
@@ -76,7 +76,7 @@ func _on_fire_timer_timeout()->void:
 		laser.position = position # Replace with function body.
 		fire_timer.start(0.4)
 
-func _on_enemy_spawner_boss_move_in():
+func _on_enemy_spawner_boss_move_in()->void:
 	star_particles.initial_velocity_min = 100
 	star_particles.initial_velocity_max = 500
 	boss_is_moving = true
